@@ -6,7 +6,6 @@ from datetime import datetime, timezone
 
 from app.services.chat_services import chatTest
 
-
 router = APIRouter(prefix="/messages")
 
 
@@ -18,6 +17,7 @@ def read_root():
 @router.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
 
 @router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -35,6 +35,7 @@ async def websocket_endpoint(websocket: WebSocket):
         print("Cliente desconectado del WebSocket.")
     except Exception as e:
         print(f"Error inesperado en WebSocket: {e}")
+
 
 class ConnectionManager:
     def __init__(self):
@@ -57,6 +58,7 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
+
 @router.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await manager.connect(websocket)
@@ -66,14 +68,14 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             data_obj = json.loads(data)
             data_obj["id"] = data_obj["id"] + "1";
             data_obj["timestamp"] = datetime.now(timezone.utc).isoformat()
-            data_obj["isBot"] = "true";
+            data_obj["isBot"] = "true"
             print(f"{data_obj}")
 
             chatbotResponse=chatTest(msg=data_obj["text"])
             contentAi = chatbotResponse.content
             splits = contentAi.split('</think>', 1)
             cleanResponse = splits[1]
-            
+
             data_obj["text"]= cleanResponse
 
             await manager.send_personal_message(json.dumps(data_obj), websocket)
