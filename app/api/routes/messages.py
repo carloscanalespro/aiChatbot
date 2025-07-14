@@ -26,9 +26,9 @@ async def websocket_endpoint(websocket: WebSocket):
         while True:
             data = await websocket.receive_text()
             data_obj = json.loads(data)
-            data_obj["id"] = data_obj["id"] + "1";
+            data_obj["id"] = data_obj["id"] + "1"
             data_obj["timestamp"] = datetime.now(timezone.utc).isoformat()
-            data_obj["isBot"] = "true";
+            data_obj["isBot"] = "true"
             print(data_obj)
             await websocket.send_json(data_obj)
     except WebSocketDisconnect:
@@ -66,7 +66,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
         while True:
             data = await websocket.receive_text()
             data_obj = json.loads(data)
-            data_obj["id"] = data_obj["id"] + "1";
+            data_obj["id"] = data_obj["id"] + "1"
             data_obj["timestamp"] = datetime.now(timezone.utc).isoformat()
             data_obj["isBot"] = "true"
             print(f"{data_obj}")
