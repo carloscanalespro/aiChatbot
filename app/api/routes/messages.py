@@ -4,7 +4,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 import json
 from datetime import datetime, timezone
 
-from app.services.chat_services import chatTest
+from app.services.chat_services import chatTest, chatTestWithStream
 
 router = APIRouter(prefix="/messages")
 
@@ -83,4 +83,30 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         await manager.broadcast(f"Client #{client_id} left the chat")
+
+@router.websocket("/wss/{client_id}")
+async def websocket_endpoint(websocket: WebSocket, client_id: int):
+    await manager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            data_obj = json.loads(data)
+            data_obj["id"] = data_obj["id"] + "1"
+            data_obj["timestamp"] = datetime.now(timezone.utc).isoformat()
+            data_obj["isBot"] = "true"
+            print(f"{data_obj}")
+
+            chatbotResponse=chatTest(msg=data_obj["text"])
+            contentAi = chatbotResponse.content
+            splits = contentAi.split('</think>', 1)
+            cleanResponse = splits[1]
+
+            data_obj["text"]= cleanResponse
+
+            await manager.send_personal_message(json.dumps(data_obj), websocket)
+            # await manager.broadcast(json.dumps(data_obj))
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
+        await manager.broadcast(f"Client #{client_id} left the chat")
+
 

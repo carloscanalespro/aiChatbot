@@ -11,3 +11,14 @@ def chatTest(msg):
         ]
     )
     return result
+
+def chatTestWithStream(msg):
+    config = {"configurable": {"thread_id": "abc789"}}
+    query = "Hi I'm Todd, please tell me a joke."
+    language = "English"
+
+    input_messages = [HumanMessage(query)]
+    # input_messages = messages + [HumanMessage(query)]
+
+
+    return llm.stream()
