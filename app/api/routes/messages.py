@@ -1,22 +1,25 @@
 from typing import Union
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 import json
 from datetime import datetime, timezone
 
-app = FastAPI()
+from app.services.chat_services import chatTest
 
 
-@app.get("/")
+router = APIRouter(prefix="/messages")
+
+
+@router.get("/")
 def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
+@router.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
-@app.websocket("/ws")
+@router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     try:
@@ -54,7 +57,7 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
-@app.websocket("/ws/{client_id}")
+@router.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await manager.connect(websocket)
     try:
@@ -64,8 +67,17 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             data_obj["id"] = data_obj["id"] + "1";
             data_obj["timestamp"] = datetime.now(timezone.utc).isoformat()
             data_obj["isBot"] = "true";
+            print(f"{data_obj}")
+
+            chatbotResponse=chatTest(msg=data_obj["text"])
+            contentAi = chatbotResponse.content
+            splits = contentAi.split('</think>', 1)
+            cleanResponse = splits[1]
+            
+            data_obj["text"]= cleanResponse
+
             await manager.send_personal_message(json.dumps(data_obj), websocket)
-            await manager.broadcast(json.dumps(data_obj))
+            # await manager.broadcast(json.dumps(data_obj))
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         await manager.broadcast(f"Client #{client_id} left the chat")

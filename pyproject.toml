@@ -6,4 +6,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.116.0",
+    "langchain>=0.3.26",
+    "langchain-core>=0.3.68",
+    "langchain-ollama>=0.3.4",
+    "setuptools>=80.9.0",
 ]
