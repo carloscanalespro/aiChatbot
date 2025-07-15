@@ -72,11 +72,13 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             print(f"{data_obj}")
 
             chatbotResponse=chatTest(msg=data_obj["text"])
-            contentAi = chatbotResponse.content
-            splits = contentAi.split('</think>', 1)
-            cleanResponse = splits[1]
+            # contentAi = chatbotResponse.content
+            # splits = contentAi.split('</think>', 1)
+            # cleanResponse = splits[1]
 
-            data_obj["text"]= cleanResponse
+            # data_obj["text"]= cleanResponse
+            data_obj["text"]= chatbotResponse.content
+            print(data_obj)
 
             await manager.send_personal_message(json.dumps(data_obj), websocket)
             # await manager.broadcast(json.dumps(data_obj))
