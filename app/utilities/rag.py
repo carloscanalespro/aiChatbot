@@ -8,9 +8,11 @@ from functools import partial
 ragDirectory = "C:/Users/soportegnex/Documents/AiDays/documentatio/docwms/docs"
 
 
+# from langchain_text_splitters import RecursiveCharacterTextSplitter
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
-    chunk_overlap=100
+    chunk_overlap=100,
+    add_start_index=True
 )
 
 
