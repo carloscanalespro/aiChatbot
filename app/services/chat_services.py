@@ -13,7 +13,10 @@ from langchain_core.messages import SystemMessage, trim_messages
 from app.adapters.llm.ollamallm import llm
 from app.adapters.vectorstore.vectordb import retriever
 
+#Todavia me falta el streming del prompt
 
+#VER si el schema, template y trimmer los mando a otras carpetas y los uso como paquetes
+# para que no estorben
 class State(TypedDict):
     messages: Annotated[Sequence[BaseMessage], add_messages]
     language: str
@@ -56,24 +59,24 @@ workflow.add_edge(START,"model")
 workflow.add_node("model", call_model)
 
 #adding memory
-memory = InMemorySaver()
+memory = InMemorySaver()#Ver que tipo de memoria me conviene mas
 app = workflow.compile(checkpointer=memory)
 
 
 def chatTest(msg):
   
-    config = {"configurable": {"thread_id": "2"}}
+    config = {"configurable": {"thread_id": "2"}} #Ver como se manejen solos los hilos de memoria
     language = "Spanish"
     accessLevel = "General Staff"
     input_messages = [HumanMessage(msg)]
 
-    infos = retriever.invoke(msg)
+    infos = retriever.invoke(msg) #HACER UNA TOOL o optimzar de alguna forma para que se ahorren recursos y tiempo
     output = app.invoke(
         {
             "info": infos,
-            "messages": input_messages, 
-            "language": language, 
-            "level":accessLevel
+            "messages": input_messages, #Verificar la eficacio del prompt
+            "language": language, #Agregar el idioma segun la ubicacion del usuario
+            "level":accessLevel #Coordinar el acceso con el login
         },
         config,
     )
