@@ -9,3 +9,5 @@ llm = ChatOllama(
 
 
 embeddingModel = OllamaEmbeddings(model="bge-m3:latest")
+
+# agentQwen3 = crear

@@ -13,6 +13,11 @@ from langchain_core.messages import SystemMessage, trim_messages
 from app.adapters.llm.ollamallm import llm
 from app.adapters.vectorstore.vectordb import retriever
 
+from langgraph.prebuilt import create_react_agent, ToolNode, tools_condition
+from langchain_core.tools import tool
+
+
+
 #Todavia me falta el streaming del prompt
 
 #VER si el schema, template y trimmer los mando a otras carpetas y los uso como paquetes
@@ -44,19 +49,47 @@ trimmer = trim_messages(
     start_on="human",
 )
 
+@tool
+def searchVectorDb(search):
+    """Search data and return to be writen"""
+    data = retriever.invoke(search)
+    return data
+
+@tool
+def preprocessor(state: State):
+    trimmed_messages = trimmer.invoke(state["messages"])
+    state["messages_trimmed"] = trimmed_messages
+    return state
+
+agentQwen3 = create_react_agent(
+    model = llm,
+    tools=[searchVectorDb]
+    prompt=prompt_template
+)
+
+agent_node = agentQwen3.bind_tools([searchVectorDb])
+
 def call_model(state: State):
     trimmed_messages = trimmer.invoke(state["messages"])
     prompt = prompt_template.invoke(
         {"messages": trimmed_messages, "info":state["info"], "language": state["language"], "level": state["level"]}
     )
-    response = llm.invoke(prompt)
+    response = agentQwen3.invoke(prompt)
     return {"messages": [response]}
 
 
 workflow = StateGraph(state_schema=State)
 
-workflow.add_edge(START,"model")
-workflow.add_node("model", call_model)
+workflow.add_node("agent", agent_node)
+workflow.add_node("chroma_tool", ToolNode(searchVectorDb))
+
+workflow.add_conditional_edges("agent", tools_condition)
+
+workflow.add_edge("chroma_tool", "agent")
+
+workflow.add_edge(START,"agent")
+
+# workflow.add_node("model", call_model) #que deberia hacer con esto
 
 #adding memory
 memory = InMemorySaver()#Ver que tipo de memoria me conviene mas
