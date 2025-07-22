@@ -13,7 +13,7 @@ from langchain_core.messages import SystemMessage, trim_messages
 from app.adapters.llm.ollamallm import llm
 from app.adapters.vectorstore.vectordb import retriever
 
-#Todavia me falta el streming del prompt
+#Todavia me falta el streaming del prompt
 
 #VER si el schema, template y trimmer los mando a otras carpetas y los uso como paquetes
 # para que no estorben
@@ -63,9 +63,9 @@ memory = InMemorySaver()#Ver que tipo de memoria me conviene mas
 app = workflow.compile(checkpointer=memory)
 
 
-def chatTest(msg):
-  
-    config = {"configurable": {"thread_id": "2"}} #Ver como se manejen solos los hilos de memoria
+def chatTest(msg:str, userId:int):
+    print(str(userId).center(10,"-"))
+    config = {"configurable": {"thread_id": userId}} #Ver como se manejen solos los hilos de memoria
     language = "Spanish"
     accessLevel = "General Staff"
     input_messages = [HumanMessage(msg)]

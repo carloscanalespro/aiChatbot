@@ -66,12 +66,13 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
         while True:
             data = await websocket.receive_text()
             data_obj = json.loads(data)
-            data_obj["id"] = data_obj["id"] + "1"
+            data_obj["id"] = data_obj["id"] + 1
             data_obj["timestamp"] = datetime.now(timezone.utc).isoformat()
             data_obj["isBot"] = "true"
+            data_obj["links"] = [{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"}]
             print(f"{data_obj}")
 
-            chatbotResponse=chatTest(msg=data_obj["text"])
+            chatbotResponse=chatTest(msg=data_obj["text"], userId=data_obj["id"])
             contentAi = chatbotResponse.content
             splits = contentAi.split('</think>', 1)
             cleanResponse = splits[1]
