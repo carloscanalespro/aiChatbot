@@ -4,96 +4,112 @@ from langgraph.graph.message import add_messages
 from typing_extensions import Annotated, TypedDict
 
 from langgraph.checkpoint.memory import MemorySaver, InMemorySaver
-from langgraph.graph import START, MessagesState, StateGraph
+from langgraph.graph import START, MessagesState, StateGraph, Graph
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import AIMessage, HumanMessage
 
 from langchain_core.messages import SystemMessage, trim_messages
 
-from app.adapters.llm.ollamallm import llm
+from app.adapters.llm.ollamallm import llm, llm_gm3
 from app.adapters.vectorstore.vectordb import retriever
 
 from langgraph.prebuilt import create_react_agent, ToolNode, tools_condition
 from langchain_core.tools import tool
 
+from langchain_core.output_parsers import StrOutputParser
+
+import json
 
 
-#Todavia me falta el streaming del prompt
+llm_search_optimizer = llm_gm3
 
-#VER si el schema, template y trimmer los mando a otras carpetas y los uso como paquetes
-# para que no estorben
 class State(TypedDict):
     messages: Annotated[Sequence[BaseMessage], add_messages]
+    query:str
+    question:str
     language: str
     level: str
     info: str
 
+# 2. Función para optimizar la consulta de búsqueda
+def decide_if_retrieve(user_query):
+    """Usa un modelo pequeño para refinar la consulta de búsqueda"""
 
-prompt_template = ChatPromptTemplate.from_messages(
-        [
-            (
-                "system",
-                "You are an information guardian and WMS consultant. Your duty is to protect sensitive data and provide accurate answers strictly within your domain: the WMS (Warehouse Management System). The user’s access level is {level}. Respect the company’s access hierarchy: Client > IT > General Staff, and deny access to information beyond the user’s role. Only answer questions related to WMS, and politely reject anything unrelated. You communicate with kindness, clarity, and precision, always responding in {language}."
-                "information about wms: {info}"
-            ),
-            MessagesPlaceholder(variable_name="messages")
-        ]
-    )
+    prompt = ChatPromptTemplate.from_template("""
+    You work for a important Warehouse Management System this system controls pachage and products entry, package sort, picking, packing and shipping.
+    Take the all the most relevant words of the user's input for interpret what the user is talking about and output them back, you have to analyze 
+    the context o situation and the pricipal action to solve some ex: i have a problem, how i delete a replenisment? output: 
+    ['problem','delete','replenishment'] in this very important format: a plain text python list. if the users's request is irrelevant like:
+    'what time is it?' or 'How is the weather' just ignore any request that not sounds to see with wms and return a False value. Return the 
+    words in the current language Spanish
 
-trimmer = trim_messages(
-    max_tokens=65,
-    strategy="last",
-    token_counter=llm,
-    include_system=True,
-    allow_partial=False,
-    start_on="human",
+    original query: {query}
+    
+    optimized query: """)
+    
+    chain = prompt | llm_search_optimizer | StrOutputParser()
+
+    response = chain.invoke({"query": user_query})
+    reponse_json = json.loads(response)
+    print(json.loads(response).center(40, "-"))
+
+    return reponse_json if reponse_json != 'False' else False
+
+
+def retrieve_information(state):
+    """Recupera información relevante de ChromaDB"""
+
+    query = state["messages"][-1].content
+    docs = retriever.invoke(query)
+
+    return {"context": docs, "question": query}
+
+def generate_response(state):
+    """Genera una respuesta basada en el contexto o sin él"""
+    if "context" in state:
+        # Respuesta con contexto
+        prompt = ChatPromptTemplate.from_template("""
+        Eres un asistente útil. Basándote en la siguiente información:
+        {context}
+        
+        Responde a la pregunta: {question}
+        """)
+        chain = prompt | llm | StrOutputParser()
+        return chain.invoke(state)
+    else:
+        # Respuesta general sin consultar la base de datos
+        prompt = ChatPromptTemplate.from_template("""
+        Eres un asistente útil. Responde a la siguiente pregunta:
+        {question}
+        """)
+        chain = prompt | llm | StrOutputParser()
+        return chain.invoke({"question": state["messages"][-1].content})
+
+# 4. Construcción del graph
+workflow = Graph()
+
+# Agregar nodos
+workflow.add_node("decide", decide_if_retrieve)
+workflow.add_node("retrieve", retrieve_information)
+workflow.add_node("generate", generate_response)
+
+# Definir las conexiones
+workflow.add_conditional_edges(
+    "decide",
+    decide_if_retrieve,
+    {
+        "retrieve": "retrieve",
+        "generate": "generate"
+    }
 )
+workflow.add_edge("retrieve", "generate")
 
-@tool
-def searchVectorDb(search):
-    """Search data and return to be writen"""
-    data = retriever.invoke(search)
-    return data
+# Establecer puntos de entrada y salida
+workflow.set_entry_point("decide")
+workflow.set_finish_point("generate")
 
-@tool
-def preprocessor(state: State):
-    trimmed_messages = trimmer.invoke(state["messages"])
-    state["messages_trimmed"] = trimmed_messages
-    return state
-
-agentQwen3 = create_react_agent(
-    model = llm,
-    tools=[searchVectorDb]
-    prompt=prompt_template
-)
-
-agent_node = agentQwen3.bind_tools([searchVectorDb])
-
-def call_model(state: State):
-    trimmed_messages = trimmer.invoke(state["messages"])
-    prompt = prompt_template.invoke(
-        {"messages": trimmed_messages, "info":state["info"], "language": state["language"], "level": state["level"]}
-    )
-    response = agentQwen3.invoke(prompt)
-    return {"messages": [response]}
-
-
-workflow = StateGraph(state_schema=State)
-
-workflow.add_node("agent", agent_node)
-workflow.add_node("chroma_tool", ToolNode(searchVectorDb))
-
-workflow.add_conditional_edges("agent", tools_condition)
-
-workflow.add_edge("chroma_tool", "agent")
-
-workflow.add_edge(START,"agent")
-
-# workflow.add_node("model", call_model) #que deberia hacer con esto
-
-#adding memory
-memory = InMemorySaver()#Ver que tipo de memoria me conviene mas
-app = workflow.compile(checkpointer=memory)
+# Compilar el graph
+app = workflow.compile()
 
 
 def chatTest(msg:str, userId:int):

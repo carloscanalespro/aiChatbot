@@ -7,6 +7,15 @@ llm = ChatOllama(
     temperature=1.0
     )
 
+llm_q25 = ChatOllama(
+    model="qwen2.5:3b",
+    temperature=1.0
+    )
+
+llm_gm3 = ChatOllama(
+    model="gemma3:4b",
+    temperature=1.0
+    )
 
 embeddingModel = OllamaEmbeddings(model="bge-m3:latest")
 
