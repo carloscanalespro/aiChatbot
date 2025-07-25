@@ -1,0 +1,227 @@
+# Introducción
+## ¿Qué es un WMS y cómo funciona?
+## Plataforma WMS de G Global: Entorno Cliente y Entorno Interno
+## ¿Por qué este manual?
+# Dashboard
+## Comprendiendo las metricas
+## Comprendiendo las Graficas
+## Panel de configuraciones 
+# Inventory(Portal cliente)
+## Comprendiendo la informacion de la tabla
+## ¿Cómo aplicar filtros?
+### Tipos de filtros disponibles
+## Opción **FILTERS**
+### Campos del filtro avanzado
+## Consultar detalles del inventario de un artículo
+### Información general del artículo
+### Tarjetas resumen de inventario
+### Inventario por país de origen (COO)
+### Inventario por Almacén
+### Historial de movimientos
+### Inventario por Lote
+# Order Monitors(portal del cliente)
+## ¿Como acceder al modulo desde el portal del cliente?
+## ¿Como generar una orden en el portal del cliente?
+### Atravez del portal.
+### Atravez del archivo .cvs
+## Cambiar entre pedidos y eventos: Uso de pestañas
+## Aplicando filtros en Orders Monitor
+### Opciones de filtrado para órdenes de pedido
+### Opciones de filtrado para eventos fulfillment.
+## ¿Como visualizar el detalle de una Orden de pedido o evento fulfillment?
+## Acciones de la orden
+### Editar dirección de envío
+### Editar dirección de facturación
+### Cancelar orden
+## Acción por evento
+# Shipping Notice (Portal del cliente)
+## ¿Cómo generar un ASN en el portal del cliente?
+## ¿Qué datos de tu ASN se muestran en Shipping Notice?
+- **#ASN Interno**: Identificador numérico interno del sistema. Es relevante para la gestión y seguimiento dentro de la operación de G Global.
+- **#ASN Cliente**: Identificador numérico asignado por ti como cliente para identificar tu ASN en el portal.
+## ¿Cómo agregar información de tus paquetes en un ASN desde el portal?
+### ¿Cómo registrar tus paquetes en una ASN usando un archivo .csv?
+# Order Monitors(Internal)
+## Visualización de la vista  principal.
+    - **# of Fulfillment Events** indica la cantidad de eventos que contiene la orden.
+## ¿Como generar una orden en Orders Monitor?.
+## ¿Como visualizar el detalle de la orden en Orders Monitor?
+## Acciones por evento.
+### Mover Articulos 
+### See more event information
+### Divide event.
+### Send to queue.
+### Marcar como prioridad.
+### Mark as Hold.
+### Release fullfilment.
+### Agregar más artículos.
+### Historial por  evento.
+### Start Shipping Date.
+### Editar opciones de envío
+### Cancelar evento
+### Reactivar evento.
+## Acciones de la orden
+### Edit shipping address.
+### Edit billing  address.
+### View lots by order.
+### Cancel order.
+### See packages.
+## Lista de empaque.
+### Packing Slip.
+### Etiqueta de contenido.
+### Reporte de cajas PL.
+### Cancelar lista de empaque.
+## Problem solving
+### ¿Como resover una orden en Probleming Solving?.
+### Opciones extras del  Problem solving.
+#### Asignar picker.
+#### Asignar packer
+#### Pickeo por caja
+#### Pickeo por pieza
+# Introducción
+## Módulo de SLAM
+### Vista útil del módulo
+### Empaquetar orden
+## Módulo de Validator
+### Vista útil del módulo
+### Validar artículos
+# Introducción
+### Movements
+### Picking
+### Seeker
+# Movimientos Picking
+## Vista util general del módulo  de Movimientos
+## Movimiento por caja.
+## Movimiento por pieza.
+### Error por mezcla de lotes al mover artículos
+## Consolidaciones
+Consulta el apartado [Error por mezcla de lotes al mover artículos](#error-por-mezcla-de-lotes-al-mover-artículos) para conocer las causas y condiciones que pueden generarlo.
+# Picking
+### Vista general del módulo Picking
+## ¿Como atender las ordenes de pedido a traves del modulo Picking?
+# Seeker
+### Vista util general del modulo Seeker
+### Escanear una locacion
+### Escanear un contenedor
+### Escanear una charola
+### Escanear un carrito
+### Escanear un articulo
+# Introducción.
+# Receive orders
+## Generar Recibo
+## Actualizar o eliminar un recibo
+## Generar PPL
+## Eliminar PPL
+## Imprimir etiquetas PPL
+# Receive orders Picking.
+En este módulo se realiza el escaneo de los **PLL (Packing List Labels)** generados previamente en el módulo [Receive Orders](./2025-05-23-ReceiveOrders.md#imprimir-etiquetas-ppl). Su objetivo es validar la información de los artículos recibidos dentro de los paquetes, asegurando que coincidan con los datos registrados y facilitando el control de recepción en el sistema WMS.
+## Escanear los PPL.
+- Después de generar e imprimir los PPL en el módulo [Receive Orders](./2025-05-23-ReceiveOrders.md#imprimir-etiquetas-ppl), como se muestra en la siguiente imagen, asegúrate de tener todos los documentos listos para el escaneo.
+## Reimprimir QR de cada Tracking Number.
+# Shipping Notice
+## Generar un ASN
+## Editar un ASN
+## Agregar Items al ASN.
+## Cargar archivos CSV para agregar varios  item line en  un ASN.
+## Editar y Eliminar un item del ASN
+###  Editar
+###  Eliminar
+## Cambiar el estado de “In Transit”, “Receiving”  y “Received” en un ASN.
+###  Pasar un ASN de “In Transit” a  “Receiving”.
+### Pasar un ASN de “Receiving” a  “Received”
+# Bins
+## Crear un Bin.
+## Escanear paquetes.
+## Opciones de detalle  y eliminar paquetes escaneados.
+### Visualizar detalles de un paquete escaneado
+### Eliminar un paquete escaneado.
+## Descargar  de archivos en formato csv o pdf sobre los paquetes.
+# Introducción.
+# Shipping.
+## Generar una orden de envio.
+## Editar una orden de envío.
+## Eliminar una orden de envío
+## Escanear Bin correspondiente a la orden de envío.
+## Cambiar el estatus a load, In Transit de un shipping.
+# Configuraciones de la compañia
+## Configuración del Tema
+## Configuración del Inventario
+## Configuración del Picker
+# Container information
+## Vista util general del módulo
+## Contexto
+## Obtener información de un contenedor
+# Item master
+## Crear un Item Master.
+## Crear kits
+## Actualizar un Item Master
+## Eliminar un  Item Master
+# Locations
+## Generar una locación.
+## Crea una locación a travéz de un archivo .CSV. 
+## Editar una locación en el portal.
+## Editar una locación  a través de un archivo .CSV
+- Abre la plantilla previamente descargada y edita únicamente los datos que deseas modificar. Asegúrate también de ingrsar la informacion de los campos ya registrados en el sistema que no deseas cambiar, para evitar que se sobrescriba información al momento de importar. Si deseas entender cómo editar correctamente la plantilla, consulta el apartado [crea una locacion a travéz de un archivo-csv](#crea-una-locación-a-travéz-de-un-archivo-csv) archivo CSV, donde se explica el proceso con mayor detalle.
+## Visualizar información de una locación. 
+## Eliminar una locación 
+## Imprimir Etiquetas de una locación.
+# Módulo de Replenishment
+## Vista útil general del módulo
+## Detalles del módulo
+### Crear Replenishment
+### Procesar orden de Replenishment
+Si buscas Replenishment con COO ve a <a href="#procesar-orden-de-replenishment-con-coo">Replenishment con COO</a>    
+### Procesar orden de Replenishment con COO
+### Cancelar Replenishment
+## Tips y trucos de este módulo
+## Problemas frecuentes
+### No detecta los ítems a mover
+### No detecta un ítem o artículo cuando lo inserto
+## Preguntas frecuentes
+### ¿Puedo borrar las órdenes de Replenishment desde la tabla de órdenes?
+### ¿Cómo puedo cancelar una orden de Replenishment?
+# Stock
+## Consultar el inventario disponible en internal. 
+## Consultar detalles del inventario  de un artículo específico en internal.
+# Totes
+## Generar un tote.
+## Editar un tote.
+## Eliminar un Tote.
+## Gestión de los tamaños para los Totes.
+### Crear 
+### Editar 
+### Eliminar
+## Imprimir código QR.
+# Trays
+## Generar un Tray 
+## Editar un Tray.
+## Eliminar un Tray
+## Generar tamaños para los Trays.
+## Vista general del módulo
+### Crear un código de seguridad
+## Vista útil del módulo
+### Obtener información de un contenedor
+### Vista util general del modulo
+### Crear un conteo ciclico
+### Eliminar un conteo ciclico
+### Ver detalles de un conteo ciclico
+### Como agregar un usuario a un grupo para hacer conteo
+### Vista util general del modulo
+### Vista general del módulo
+### Crear un conteo cíclico
+### Eliminar un conteo cíclico
+### Ver detalles de un conteo cíclico
+### Cómo agregar un usuario a un grupo para hacer conteo
+### Crear un conteo ciclico
+### Eliminar un conteo ciclico
+### Ver detalles de un conteo ciclico
+### Como agregar un usuario a un grupo para hacer conteo
+## Vista util del modulo
+### Crear una guia
+### Editar una guia
+### Eliminar una guia
+## Modulo de Warehouse
+### Vista util general del modulo
+### Registrar un warehouse
+### Editar un warehouse
+### Eliminar un warehouse

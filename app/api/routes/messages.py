@@ -4,7 +4,10 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 import json
 from datetime import datetime, timezone
 
-from app.services.chat_services import chatTest, chatTestWithStream
+from app.services.chat_services import app
+from langchain_core.messages import HumanMessage
+
+
 
 router = APIRouter(prefix="/messages")
 
@@ -64,16 +67,29 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await manager.connect(websocket)
     try:
         while True:
+
             data = await websocket.receive_text()
             data_obj = json.loads(data)
+
+            # 5. Ejemplo de invocación CORRECTA
+            result = app.invoke({
+                "messages": [HumanMessage(content=data_obj["text"])],  # Debe ser lista de BaseMessage
+                "need_search": False,  # Valores iniciales
+                "optimized_query": None,
+                "current_question": None,
+                "level":"IT",
+                "language":"Spanish"
+            })
+
+            
             data_obj["id"] = data_obj["id"] + 1
             data_obj["timestamp"] = datetime.now(timezone.utc).isoformat()
             data_obj["isBot"] = "true"
             data_obj["links"] = [{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"}]
             print(f"{data_obj}")
 
-            chatbotResponse=chatTest(msg=data_obj["text"], userId=data_obj["id"])
-            contentAi = chatbotResponse.content
+            # chatbotResponse=chatTest(msg=data_obj["text"], userId=data_obj["id"])
+            contentAi = result["response"]
             splits = contentAi.split('</think>', 1)
             cleanResponse = splits[1]
 
@@ -99,12 +115,12 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             data_obj["isBot"] = "true"
             print(f"{data_obj}")
 
-            chatbotResponse=chatTest(msg=data_obj["text"])
-            contentAi = chatbotResponse.content
-            splits = contentAi.split('</think>', 1)
-            cleanResponse = splits[1]
+            # chatbotResponse=chatTest(msg=data_obj["text"])
+            # contentAi = chatbotResponse.content
+            # splits = contentAi.split('</think>', 1)
+            # cleanResponse = splits[1]
 
-            data_obj["text"]= cleanResponse
+            # data_obj["text"]= cleanResponse
 
             await manager.send_personal_message(json.dumps(data_obj), websocket)
             # await manager.broadcast(json.dumps(data_obj))
