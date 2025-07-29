@@ -85,16 +85,20 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             data_obj["id"] = data_obj["id"] + 1
             data_obj["timestamp"] = datetime.now(timezone.utc).isoformat()
             data_obj["isBot"] = "true"
-            data_obj["links"] = [{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"}]
+            # data_obj["links"] = [{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"},{"title":"youtube","url":"www.youtube.com"}]
+            data_obj["links"] = []
             print(f"{data_obj}")
 
             # chatbotResponse=chatTest(msg=data_obj["text"], userId=data_obj["id"])
-            contentAi = result["response"]
-            splits = contentAi.split('</think>', 1)
-            cleanResponse = splits[1]
 
-            data_obj["text"]= cleanResponse
+            # contentAi = result["response"]
+            # splits = contentAi.split('</think>', 1)
+            # cleanResponse = splits[1]
+
+            # data_obj["text"]= cleanResponse
+            
             # data_obj["text"]= chatbotResponse.content
+            data_obj["text"] = result["response"]
             print(data_obj)
 
             await manager.send_personal_message(json.dumps(data_obj), websocket)

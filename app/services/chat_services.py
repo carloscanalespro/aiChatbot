@@ -11,7 +11,10 @@ from langchain_core.messages import AIMessage, HumanMessage
 
 from langchain_core.messages import SystemMessage, trim_messages
 
-from app.adapters.llm.ollamallm import llm, llm_q25
+# from app.adapters.llm.ollamallm import llm, llm_q25, llm_gemini2, llm_openai
+
+from app.adapters.llm.ollamallm import llm_openai
+
 from app.adapters.vectorstore.vectordb import retriever, similarity_search
 
 from langgraph.prebuilt import create_react_agent, ToolNode, tools_condition
@@ -24,10 +27,8 @@ import ast
 from langchain_community.document_loaders import TextLoader
 
 
-
-
-
-llm_search_optimizer = llm_q25
+llm_search_optimizer = llm_openai
+llm = llm_openai
 
 
 

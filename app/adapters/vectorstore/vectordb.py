@@ -1,5 +1,5 @@
 from langchain_chroma import Chroma
-from app.adapters.llm.ollamallm import embeddingModel
+from app.adapters.llm.ollamallm import embed, embeddingModel
 
 db_location = "/storage/chromaDb-wms/"
 
