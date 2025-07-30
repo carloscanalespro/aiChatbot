@@ -72,6 +72,11 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             data_obj = json.loads(data)
 
             # 5. Ejemplo de invocación CORRECTA
+            config = {
+                "configurable": {
+                    "thread_id": data_obj["id"]
+                }
+            }
             result = app.invoke({
                 "messages": [HumanMessage(content=data_obj["text"])],  # Debe ser lista de BaseMessage
                 "need_search": False,  # Valores iniciales
@@ -79,7 +84,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
                 "current_question": None,
                 "level":"IT",
                 "language":"Spanish"
-            })
+            }, config)
 
             
             data_obj["id"] = data_obj["id"] + 1

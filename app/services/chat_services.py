@@ -11,9 +11,9 @@ from langchain_core.messages import AIMessage, HumanMessage
 
 from langchain_core.messages import SystemMessage, trim_messages
 
-# from app.adapters.llm.ollamallm import llm, llm_q25, llm_gemini2, llm_openai
+from app.adapters.llm.ollamallm import llm, llm_q25
 
-from app.adapters.llm.ollamallm import llm_openai
+# from app.adapters.llm.ollamallm import llm_openai
 
 from app.adapters.vectorstore.vectordb import retriever, similarity_search
 
@@ -27,8 +27,8 @@ import ast
 from langchain_community.document_loaders import TextLoader
 
 
-llm_search_optimizer = llm_openai
-llm = llm_openai
+llm_search_optimizer = llm_q25
+llm = llm
 
 
 
@@ -121,6 +121,9 @@ def generate_response(state: State) -> State:
         The user’s access level is {level}. Respect the company’s access hierarchy: IT> Client > General Staff, and deny access to information beyond the user’s role. 
         Only answer questions related to WMS, and politely reject anything unrelated. 
         You communicate with kindness, clarity, and precision, always responding in {language}.
+                                                  
+        Use the information wisely and select the more relevant to the quesiton asked, and get the best of it to respond,
+        Dont mix information
         information about wms: {context}
                 
         
@@ -175,7 +178,8 @@ workflow.add_edge("retrieve", "generate")
 workflow.set_entry_point("decide")
 workflow.set_finish_point("generate")
 
-app = workflow.compile()
+checkpointer = InMemorySaver()
+app = workflow.compile(checkpointer=checkpointer)
 
 
 
