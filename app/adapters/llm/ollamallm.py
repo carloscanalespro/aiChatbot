@@ -19,3 +19,4 @@ llm_gm3 = ChatOllama(
 
 
 embeddingModel = OllamaEmbeddings(model="bge-m3:latest")
+

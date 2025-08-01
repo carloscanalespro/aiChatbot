@@ -1,11 +1,19 @@
+title: Introducción
+link: https://wmsdocs.netlify.app/docs/internal/Packing/2025-05-23-introduccion
 # Introducción
 ## ¿Qué es un WMS y cómo funciona?
 ## Plataforma WMS de G Global: Entorno Cliente y Entorno Interno
 ## ¿Por qué este manual?
+
+title: Dashboard
+link: https://wmsdocs.netlify.app/docs/client/Dashboard
 # Dashboard
 ## Comprendiendo las metricas
 ## Comprendiendo las Graficas
 ## Panel de configuraciones 
+
+title: Inventory
+link: https://wmsdocs.netlify.app/docs/client/Inventory
 # Inventory(Portal cliente)
 ## Comprendiendo la informacion de la tabla
 ## ¿Cómo aplicar filtros?
@@ -19,6 +27,9 @@
 ### Inventario por Almacén
 ### Historial de movimientos
 ### Inventario por Lote
+
+title: Order Monitors
+link: https://wmsdocs.netlify.app/docs/client/OrderMonitors
 # Order Monitors(portal del cliente)
 ## ¿Como acceder al modulo desde el portal del cliente?
 ## ¿Como generar una orden en el portal del cliente?
@@ -34,16 +45,19 @@
 ### Editar dirección de facturación
 ### Cancelar orden
 ## Acción por evento
+
+title: Shipping Notices
+link: https://wmsdocs.netlify.app/docs/client/ShippingNotices
 # Shipping Notice (Portal del cliente)
 ## ¿Cómo generar un ASN en el portal del cliente?
 ## ¿Qué datos de tu ASN se muestran en Shipping Notice?
-- **#ASN Interno**: Identificador numérico interno del sistema. Es relevante para la gestión y seguimiento dentro de la operación de G Global.
-- **#ASN Cliente**: Identificador numérico asignado por ti como cliente para identificar tu ASN en el portal.
 ## ¿Cómo agregar información de tus paquetes en un ASN desde el portal?
 ### ¿Cómo registrar tus paquetes en una ASN usando un archivo .csv?
+
+title: Order Monitors
+link: https://wmsdocs.netlify.app/docs/internal/OrderMonitor
 # Order Monitors(Internal)
 ## Visualización de la vista  principal.
-    - **# of Fulfillment Events** indica la cantidad de eventos que contiene la orden.
 ## ¿Como generar una orden en Orders Monitor?.
 ## ¿Como visualizar el detalle de la orden en Orders Monitor?
 ## Acciones por evento.
@@ -78,27 +92,49 @@
 #### Asignar packer
 #### Pickeo por caja
 #### Pickeo por pieza
+
+title: Introducción
+link: https://wmsdocs.netlify.app/docs/internal/Packing/2025-05-23-introduccion
 # Introducción
+
+title: SLAM
+link: https://wmsdocs.netlify.app/docs/internal/Packing/slam
 ## Módulo de SLAM
 ### Vista útil del módulo
 ### Empaquetar orden
+
+title: Validator
+link: https://wmsdocs.netlify.app/docs/internal/Packing/validator
 ## Módulo de Validator
 ### Vista útil del módulo
 ### Validar artículos
+### Autorizacion de lotes no esperados
+### Validacion de lote activada
+
+title: Introducción
+link: https://wmsdocs.netlify.app/docs/internal/Picking/2025-05-23-introduccion
 # Introducción
 ### Movements
 ### Picking
 ### Seeker
+
+title: Movimientos
+link: https://wmsdocs.netlify.app/docs/internal/Picking/2025-05-23-movements
 # Movimientos Picking
 ## Vista util general del módulo  de Movimientos
 ## Movimiento por caja.
 ## Movimiento por pieza.
 ### Error por mezcla de lotes al mover artículos
 ## Consolidaciones
-Consulta el apartado [Error por mezcla de lotes al mover artículos](#error-por-mezcla-de-lotes-al-mover-artículos) para conocer las causas y condiciones que pueden generarlo.
+
+title: Picking
+link: https://wmsdocs.netlify.app/docs/internal/Picking/2025-05-23-picking
 # Picking
 ### Vista general del módulo Picking
 ## ¿Como atender las ordenes de pedido a traves del modulo Picking?
+
+title: Seeker
+link: https://wmsdocs.netlify.app/docs/internal/Picking/seeker
 # Seeker
 ### Vista util general del modulo Seeker
 ### Escanear una locacion
@@ -106,18 +142,28 @@ Consulta el apartado [Error por mezcla de lotes al mover artículos](#error-por-
 ### Escanear una charola
 ### Escanear un carrito
 ### Escanear un articulo
+
+title: Introducción
+link: https://wmsdocs.netlify.app/docs/internal/Receipt/2025-05-23-introduccion
 # Introducción.
+
+title: Receive orders
+link: https://wmsdocs.netlify.app/docs/internal/Receipt/2025-05-23-ReceiveOrder
 # Receive orders
 ## Generar Recibo
 ## Actualizar o eliminar un recibo
 ## Generar PPL
 ## Eliminar PPL
 ## Imprimir etiquetas PPL
+
+title: Receive orders Picking.
+link: https://wmsdocs.netlify.app/docs/internal/Receipt/2025-05-23-ReceiveOrdersPicking
 # Receive orders Picking.
-En este módulo se realiza el escaneo de los **PLL (Packing List Labels)** generados previamente en el módulo [Receive Orders](./2025-05-23-ReceiveOrders.md#imprimir-etiquetas-ppl). Su objetivo es validar la información de los artículos recibidos dentro de los paquetes, asegurando que coincidan con los datos registrados y facilitando el control de recepción en el sistema WMS.
 ## Escanear los PPL.
-- Después de generar e imprimir los PPL en el módulo [Receive Orders](./2025-05-23-ReceiveOrders.md#imprimir-etiquetas-ppl), como se muestra en la siguiente imagen, asegúrate de tener todos los documentos listos para el escaneo.
 ## Reimprimir QR de cada Tracking Number.
+
+title: Shipping Notice
+link: https://wmsdocs.netlify.app/docs/internal/Receipt/2025-05-23-ShippingNotice
 # Shipping Notice
 ## Generar un ASN
 ## Editar un ASN
@@ -129,6 +175,9 @@ En este módulo se realiza el escaneo de los **PLL (Packing List Labels)** gener
 ## Cambiar el estado de “In Transit”, “Receiving”  y “Received” en un ASN.
 ###  Pasar un ASN de “In Transit” a  “Receiving”.
 ### Pasar un ASN de “Receiving” a  “Received”
+
+title: Bins
+link: https://wmsdocs.netlify.app/docs/internal/Shipping/2025-05-23-Bins
 # Bins
 ## Crear un Bin.
 ## Escanear paquetes.
@@ -136,41 +185,60 @@ En este módulo se realiza el escaneo de los **PLL (Packing List Labels)** gener
 ### Visualizar detalles de un paquete escaneado
 ### Eliminar un paquete escaneado.
 ## Descargar  de archivos en formato csv o pdf sobre los paquetes.
+
+title: Introducción
+link: https://wmsdocs.netlify.app/docs/internal/Shipping/2025-05-23-introduccion
 # Introducción.
+
+title: Shipping
+link: https://wmsdocs.netlify.app/docs/internal/Shipping/2025-05-23-Shipping
 # Shipping.
 ## Generar una orden de envio.
 ## Editar una orden de envío.
 ## Eliminar una orden de envío
 ## Escanear Bin correspondiente a la orden de envío.
 ## Cambiar el estatus a load, In Transit de un shipping.
+
+title: Configuraciones de compañia
+link: https://wmsdocs.netlify.app/docs/internal/wm/2025-05-23-configuraciones_de_compa%C3%B1ia/
 # Configuraciones de la compañia
 ## Configuración del Tema
 ## Configuración del Inventario
 ## Configuración del Picker
+
+title: Container information
+link: https://wmsdocs.netlify.app/docs/internal/WM/2025-05-23-containerInformation
 # Container information
 ## Vista util general del módulo
 ## Contexto
 ## Obtener información de un contenedor
+
+title: Item master
+link: https://wmsdocs.netlify.app/docs/internal/WM/2025-05-23-itemMaster
 # Item master
 ## Crear un Item Master.
 ## Crear kits
 ## Actualizar un Item Master
 ## Eliminar un  Item Master
+
+title: Locations
+link: https://wmsdocs.netlify.app/docs/internal/WM/2025-05-23-locations
 # Locations
 ## Generar una locación.
 ## Crea una locación a travéz de un archivo .CSV. 
 ## Editar una locación en el portal.
 ## Editar una locación  a través de un archivo .CSV
-- Abre la plantilla previamente descargada y edita únicamente los datos que deseas modificar. Asegúrate también de ingrsar la informacion de los campos ya registrados en el sistema que no deseas cambiar, para evitar que se sobrescriba información al momento de importar. Si deseas entender cómo editar correctamente la plantilla, consulta el apartado [crea una locacion a travéz de un archivo-csv](#crea-una-locación-a-travéz-de-un-archivo-csv) archivo CSV, donde se explica el proceso con mayor detalle.
 ## Visualizar información de una locación. 
 ## Eliminar una locación 
 ## Imprimir Etiquetas de una locación.
+
+title: Replenishment
+link: https://wmsdocs.netlify.app/docs/internal/WM/2025-05-23-replenishment
 # Módulo de Replenishment
 ## Vista útil general del módulo
 ## Detalles del módulo
 ### Crear Replenishment
 ### Procesar orden de Replenishment
-Si buscas Replenishment con COO ve a <a href="#procesar-orden-de-replenishment-con-coo">Replenishment con COO</a>    
 ### Procesar orden de Replenishment con COO
 ### Cancelar Replenishment
 ## Tips y trucos de este módulo
@@ -180,9 +248,15 @@ Si buscas Replenishment con COO ve a <a href="#procesar-orden-de-replenishment-c
 ## Preguntas frecuentes
 ### ¿Puedo borrar las órdenes de Replenishment desde la tabla de órdenes?
 ### ¿Cómo puedo cancelar una orden de Replenishment?
+
+title: Stock
+link: https://wmsdocs.netlify.app/docs/internal/WM/2025-05-23-stock
 # Stock
 ## Consultar el inventario disponible en internal. 
 ## Consultar detalles del inventario  de un artículo específico en internal.
+
+title: Totes
+link: https://wmsdocs.netlify.app/docs/internal/WM/2025-05-23-totes
 # Totes
 ## Generar un tote.
 ## Editar un tote.
@@ -192,21 +266,35 @@ Si buscas Replenishment con COO ve a <a href="#procesar-orden-de-replenishment-c
 ### Editar 
 ### Eliminar
 ## Imprimir código QR.
+
+title: Trays
+link: https://wmsdocs.netlify.app/docs/internal/WM/2025-05-23-trays
 # Trays
 ## Generar un Tray 
 ## Editar un Tray.
 ## Eliminar un Tray
 ## Generar tamaños para los Trays.
+
+title: Códigos de Seguridad
+link: https://wmsdocs.netlify.app/docs/internal/WM/codigosdeseguridad
 ## Vista general del módulo
 ### Crear un código de seguridad
+
+title: Información del Contenedor
+link: https://wmsdocs.netlify.app/docs/internal/WM/containerInformation
 ## Vista útil del módulo
 ### Obtener información de un contenedor
+
+title: Cycle Counting
+link: https://wmsdocs.netlify.app/docs/internal/WM/cyclecountingApp
 ### Vista util general del modulo
 ### Crear un conteo ciclico
 ### Eliminar un conteo ciclico
 ### Ver detalles de un conteo ciclico
 ### Como agregar un usuario a un grupo para hacer conteo
-### Vista util general del modulo
+
+title: Conteo Cíclico
+link: https://wmsdocs.netlify.app/docs/internal/WM/cyclecountingwms
 ### Vista general del módulo
 ### Crear un conteo cíclico
 ### Eliminar un conteo cíclico
@@ -216,10 +304,16 @@ Si buscas Replenishment con COO ve a <a href="#procesar-orden-de-replenishment-c
 ### Eliminar un conteo ciclico
 ### Ver detalles de un conteo ciclico
 ### Como agregar un usuario a un grupo para hacer conteo
+
+title: Routing Guides
+link: https://wmsdocs.netlify.app/docs/internal/WM/routingguides
 ## Vista util del modulo
 ### Crear una guia
 ### Editar una guia
 ### Eliminar una guia
+
+title: Warehouse
+link: https://wmsdocs.netlify.app/docs/internal/WM/warehouse
 ## Modulo de Warehouse
 ### Vista util general del modulo
 ### Registrar un warehouse
